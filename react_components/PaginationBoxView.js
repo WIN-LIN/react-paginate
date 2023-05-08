@@ -52,13 +52,11 @@ export default class PaginationBoxView extends Component {
     eventListener: PropTypes.string,
     renderOnZeroPageCount: PropTypes.func,
     selectedPageRel: PropTypes.string,
-    showFirstLabel: PropTypes.bool,
     firstLabel: PropTypes.node,
     firstClassName: PropTypes.string,
     firstLinkClassName: PropTypes.string,
     firstAriaLabel: PropTypes.string,
     firstRel: PropTypes.string,
-    showLastLabel: PropTypes.bool,
     lastLabel: PropTypes.node,
     lastClassName: PropTypes.string,
     lastLinkClassName: PropTypes.string,
@@ -89,12 +87,10 @@ export default class PaginationBoxView extends Component {
     renderOnZeroPageCount: undefined,
     selectedPageRel: 'canonical',
     hrefAllControls: false,
-    showFirstLabel: false,
     firstLabel: 'First',
     firstClassName: 'first',
     firstAriaLabel: 'First page',
     firstRel: 'first',
-    showLastLabel: false,
     lastLabel: 'Last',
     lastClassName: 'last',
     lastAriaLabel: 'Last page',
@@ -586,13 +582,13 @@ export default class PaginationBoxView extends Component {
       nextLinkClassName,
       nextAriaLabel,
       nextRel,
-      showFirstLabel,
+
       firstLabel,
       firstClassName,
       firstLinkClassName,
       firstAriaLabel,
       firstRel,
-      showLastLabel,
+
       lastLabel,
       lastClassName,
       lastLinkClassName,
@@ -640,7 +636,7 @@ export default class PaginationBoxView extends Component {
         role="navigation"
         aria-label="Pagination"
       >
-        { showFirstLabel === true && (
+
           <li className={firstClasses}>
           <a
             className={firstLinkClasses}
@@ -655,7 +651,7 @@ export default class PaginationBoxView extends Component {
           >
             {firstLabel}
           </a>
-          </li>)}
+          </li>
         <li className={previousClasses}>
           <a
             className={previousLinkClasses}
@@ -689,7 +685,7 @@ export default class PaginationBoxView extends Component {
             {nextLabel}
           </a>
         </li>
-        { showLastLabel === true && (
+
           <li className={lastLabelClasses}>
             <a
               className={lastLinkClasses}
@@ -705,7 +701,7 @@ export default class PaginationBoxView extends Component {
               {lastLabel}
             </a>
           </li>
-        )}
+
       </ul>
     );
   }

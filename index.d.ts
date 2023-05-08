@@ -241,6 +241,17 @@ export interface ReactPaginateProps {
    * Default value `canonical`. Set to `null` to disable.
    */
   selectedPageRel?: string | null | undefined;
+
+  firstLabel?: string | React.ReactNode | undefined;
+  firstClassName?: string | undefined;
+  firstLinkClassName?: string | undefined;
+  firstAriaLabel?: string | undefined;
+  firstRel?: string | null | undefined;
+  lastLabel?: string | undefined;
+  lastClassName?: string | undefined;
+  lastLinkClassName?: string | undefined;
+  lastAriaLabel?: string | React.ReactNode | undefined;
+  lastRel?: string | null | undefined;
 }
 
 declare const ReactPaginate: React.ComponentClass<ReactPaginateProps>;
