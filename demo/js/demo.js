@@ -165,6 +165,10 @@ export class App extends Component {
               // return 4; --> Will go to page 5 (index 4)
               // return nothing (undefined) to let standard behavior take place.
             }}
+            showFirstLabel
+            firstLabel='first'
+            showLastLabel
+            lastLabel='last'
           />
         </nav>
       </div>

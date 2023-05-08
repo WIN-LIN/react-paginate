@@ -52,6 +52,18 @@ export default class PaginationBoxView extends Component {
     eventListener: PropTypes.string,
     renderOnZeroPageCount: PropTypes.func,
     selectedPageRel: PropTypes.string,
+    showFirstLabel: PropTypes.bool,
+    firstLabel: PropTypes.node,
+    firstClassName: PropTypes.string,
+    firstLinkClassName: PropTypes.string,
+    firstAriaLabel: PropTypes.string,
+    firstRel: PropTypes.string,
+    showLastLabel: PropTypes.bool,
+    lastLabel: PropTypes.node,
+    lastClassName: PropTypes.string,
+    lastLinkClassName: PropTypes.string,
+    lastAriaLabel: PropTypes.string,
+    lastRel: PropTypes.string,
   };
 
   static defaultProps = {
@@ -77,6 +89,16 @@ export default class PaginationBoxView extends Component {
     renderOnZeroPageCount: undefined,
     selectedPageRel: 'canonical',
     hrefAllControls: false,
+    showFirstLabel: false,
+    firstLabel: 'First',
+    firstClassName: 'first',
+    firstAriaLabel: 'First page',
+    firstRel: 'first',
+    showLastLabel: false,
+    lastLabel: 'Last',
+    lastClassName: 'last',
+    lastAriaLabel: 'Last page',
+    lastRel: 'last',
   };
 
   constructor(props) {
@@ -189,6 +211,23 @@ export default class PaginationBoxView extends Component {
       selected < pageCount - 1 ? selected + 1 : undefined,
       { isNext: true }
     );
+  };
+  handleFirstPage = (evt) => {
+    const { selected } = this.state;
+    evt.preventDefault ? evt.preventDefault() : (evt.returnValue = false);
+    if (selected > 0) {
+      this.handlePageSelected(0, evt);
+    }
+  };
+
+  handleLastPage = (evt) => {
+    const { selected } = this.state;
+    const { pageCount } = this.props;
+
+    evt.preventDefault ? evt.preventDefault() : (evt.returnValue = false);
+    if (selected < pageCount - 1) {
+      this.handlePageSelected(pageCount - 1, evt);
+    }
   };
 
   handlePageSelected = (selected, event) => {
@@ -547,6 +586,18 @@ export default class PaginationBoxView extends Component {
       nextLinkClassName,
       nextAriaLabel,
       nextRel,
+      showFirstLabel,
+      firstLabel,
+      firstClassName,
+      firstLinkClassName,
+      firstAriaLabel,
+      firstRel,
+      showLastLabel,
+      lastLabel,
+      lastClassName,
+      lastLinkClassName,
+      lastAriaLabel,
+      lastRel,
     } = this.props;
 
     const { selected } = this.state;
@@ -560,23 +611,51 @@ export default class PaginationBoxView extends Component {
     const nextClasses = `${classNameIfDefined(nextClassName)}${
       isNextDisabled ? ` ${classNameIfDefined(disabledClassName)}` : ''
     }`;
-
+    const firstClasses = `${classNameIfDefined(firstClassName)}${
+      isPreviousDisabled ? ` ${classNameIfDefined(disabledClassName)}` : ''
+    }`;
+    const lastLabelClasses = `${classNameIfDefined(lastClassName)}${
+      isNextDisabled ? ` ${classNameIfDefined(disabledClassName)}` : ''
+    }`;
     const previousLinkClasses = `${classNameIfDefined(previousLinkClassName)}${
       isPreviousDisabled ? ` ${classNameIfDefined(disabledLinkClassName)}` : ''
     }`;
     const nextLinkClasses = `${classNameIfDefined(nextLinkClassName)}${
       isNextDisabled ? ` ${classNameIfDefined(disabledLinkClassName)}` : ''
     }`;
+    const firstLinkClasses = `${classNameIfDefined(firstLinkClassName)}${
+      isPreviousDisabled ? ` ${classNameIfDefined(disabledLinkClassName)}` : ''
+    }`;
+    const lastLinkClasses = `${classNameIfDefined(lastLinkClassName)}${
+      isPreviousDisabled ? ` ${classNameIfDefined(disabledLinkClassName)}` : ''
+    }`;
 
     const previousAriaDisabled = isPreviousDisabled ? 'true' : 'false';
     const nextAriaDisabled = isNextDisabled ? 'true' : 'false';
-
+    const firstAriaDisabled = isPreviousDisabled ? 'true' : 'false';
+    const lastAriaDisabled = isNextDisabled ? 'true' : 'false';
     return (
       <ul
         className={className || containerClassName}
         role="navigation"
         aria-label="Pagination"
       >
+        { showFirstLabel === true && (
+          <li className={firstClasses}>
+          <a
+            className={firstLinkClasses}
+            href={1}
+            tabIndex='0'
+            role="button"
+            onKeyPress={this.handleFirstPage}
+            aria-disabled={firstAriaDisabled}
+            aria-label={firstAriaLabel}
+            rel={firstRel}
+            {...this.getEventListener(this.handleFirstPage)}
+          >
+            {firstLabel}
+          </a>
+          </li>)}
         <li className={previousClasses}>
           <a
             className={previousLinkClasses}
@@ -610,6 +689,23 @@ export default class PaginationBoxView extends Component {
             {nextLabel}
           </a>
         </li>
+        { showLastLabel === true && (
+          <li className={lastLabelClasses}>
+            <a
+              className={lastLinkClasses}
+              href={this.getElementHref(pageCount - 1)}
+              tabIndex={isNextDisabled ? '-1' : '0'}
+              role="button"
+              onKeyPress={this.handleLastPage}
+              aria-disabled={lastAriaDisabled}
+              aria-label={lastAriaLabel}
+              rel={lastRel}
+              {...this.getEventListener(this.handleLastPage)}
+            >
+              {lastLabel}
+            </a>
+          </li>
+        )}
       </ul>
     );
   }
